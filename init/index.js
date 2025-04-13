@@ -18,7 +18,7 @@ async function main() {
 
 
 const initDB=async()=>{
-    await sListing.deleteMany({});
+    await Listing.deleteMany({});
     await Listing.insertMany(initData.data);
     console.log("data waas initialised");
 }
