@@ -6,46 +6,65 @@
         <div class="col-7 offset-2">
             <h1>Edit Your Listing</h1>
 
-            <form method="post" action="/listings/<%=listing._id%>?_method=PUT">
-               
+            <form method="post" action="/listings/<%=listing._id%>?_method=PUT"  class="needs-validation" novalidate>
+
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" name="listing[title]" value="<%=listing.title%>" class="form-control" />
+                    <input type="text" name="listing[title]" value="<%=listing.title%>" class="form-control" required />
+                    <div class="valid-feedback">looks good</div>
+                    <div class="invalid-feedback">Title cannot be empty</div>
                 </div>
-                
+
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea name="listing[description]" class="form-control"><%=listing.description%> </textarea>
+                    <textarea name="listing[description]" class="form-control"
+                        required><%=listing.description%> </textarea>
+                    <div class="valid-feedback">looks good</div>
+                    <div class="invalid-feedback">Enter short descryption</div>
                 </div>
 
-                
+
                 <div class="mb-3">
                     <label for="image" class="form-label">Image</label>
-                    <input name="listing[image]" value="<%=listing.image.url%>" type="text" class="form-control" />
+                    <input name="listing[image]" value="<%=listing.image.url%>" type="text" class="form-control"
+                        required />
+                    <div class="valid-feedback">looks good</div>
+                    <div class="invalid-feedback">Enter valid image</div>
                 </div>
 
-                
+
                 <div class="row">
                     <div class="mb-3 col-md-4">
                         <label for="price" class="form-label">Price</label>
-                        <input name="listing[price]" value="<%=listing.price%>" type="number" class="form-control" />
+                        <input name="listing[price]" value="<%=listing.price%>" type="number" class="form-control"
+                            required />
+                        <div class="valid-feedback">looks good</div>
+                        <div class="invalid-feedback">Enter a number</div>
                     </div>
 
-                    
+
                     <div class="mb-3 col-md-4">
                         <label for="country" class="form-label">Country</label>
-                        <input name="listing[country]" value="<%=listing.country%>" type="text" class="form-control" />
+                        <input name="listing[country]" value="<%=listing.country%>" type="text" class="form-control"
+                            required />
+                        <div class="valid-feedback">looks good</div>
+                        <div class="invalid-feedback">Enter a valid country</div>
                     </div>
                 </div>
-                
+
                 <div class="mb-3">
                     <label for="location" class="form-label">Location</label>
-                    <input name="listing[location]" value="<%=listing.location%>" type="text" class="form-control" />
+                    <input name="listing[location]" value="<%=listing.location%>" type="text" class="form-control"
+                        required />
+                    <div class="valid-feedback">looks good</div>
+                    <div class="invalid-feedback">Enter valid location</div>
                 </div>
                 <br>
-                <button class="btn btn-dark add-btn">submit</button>
-                
+                <button class="btn btn-dark add-btn">edit</button>
+
             </form>
 
         </div>
     </div>
+
+    <script src="./js/script.js"></script>
