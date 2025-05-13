@@ -1,10 +1,10 @@
 const express = require("express");
-const router = express.Router({mergeParams:true});
+const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
-const { listingSchema  } = require("../schema.js");
+const { listingSchema } = require("../schema.js");
 const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing.js");
-
+const methodOverride = require("method-override");
 
 const validateListing = (req, res, next) => {
     let { error } = listingSchema.validate(req.body);
@@ -58,7 +58,7 @@ router.post("/", validateListing,
 
 
 //edit route
-router.get("/:id/edit", validateListing, wrapAsync(async (req, res) => {
+router.get("/:id/edit", wrapAsync(async (req, res) => {
 
     let { id } = req.params;
     const listing = await Listing.findById(id);
@@ -70,6 +70,17 @@ router.get("/:id/edit", validateListing, wrapAsync(async (req, res) => {
 //update
 router.put("/:id", validateListing, wrapAsync(async (req, res) => {
     let { id } = req.params;
+    const listing = await Listing.findById(id);
+
+
+
+
+    if (!req.body.listing.image || req.body.listing.image.trim() === "") {
+        req.body.listing.image = listing.image.url;
+    }
+
+
+
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
 
     res.redirect(`/listings/${id}`);
@@ -78,10 +89,10 @@ router.put("/:id", validateListing, wrapAsync(async (req, res) => {
 //delete route
 router.delete("/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
-    let deletedListing = await Listing.findByIdAndDelete(id);
-    
+    await Listing.findByIdAndDelete(id);
+
     res.redirect("/listings");
 }));
 
 
-module.exports =router;
+module.exports = router;
