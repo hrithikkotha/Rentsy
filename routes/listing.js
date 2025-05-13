@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({mergeParams:true});
 const wrapAsync = require("../utils/wrapAsync.js");
 const { listingSchema  } = require("../schema.js");
 const ExpressError = require("../utils/ExpressError.js");
@@ -79,7 +79,7 @@ router.put("/:id", validateListing, wrapAsync(async (req, res) => {
 router.delete("/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
-
+    
     res.redirect("/listings");
 }));
 
