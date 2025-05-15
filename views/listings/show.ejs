@@ -12,19 +12,27 @@
         </br>
         <div class=" col-6 offset-3 show-card listing-card">
             <img src="<%=listing.image.url%>" class="card-img-top show-img " alt="listing image">
+            <br/><br>
+
 
             <div class="card-body">
                 <p class="card-text">
-                    <br>
-                    <b>
-
-                    </b>
-                    </br>
-
-                    <%=listing.description%> </br>
-                        &#8377; <%= listing.price.toLocaleString("en-in")%></br>
-                            <%=listing.location%></br>
-                                <%=listing.country%> <br>
+                    <i>
+                       Owned by: <%=listing.owner.username%>
+                    </i>
+                </p>
+                <br />
+                <p class="card-text">
+                    <%=listing.description%>
+                </p> </br>
+                <p class="card-text">
+                    &#8377; <%= listing.price.toLocaleString("en-in")%>
+                </p>
+                <p class="card-text">
+                    <%=listing.location%></br>
+                </p>
+                <p class="card-text">
+                    <%=listing.country%> <br>
                 </p>
             </div>
         </div>
