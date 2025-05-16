@@ -5,30 +5,22 @@ const Listing = require("../models/listing.js");
 const methodOverride = require("method-override");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 
-const listingController=require("../controllers/listings.js");
+const listingController = require("../controllers/listings.js");
 
+router.route("/")
+    .get(wrapAsync(listingController.index))
+    .post(validateListing, wrapAsync(listingController.createListing));
 
-//index route
-router.get("/", wrapAsync(listingController.index));
-
-//new route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-//show Route
-router.get("/:id", wrapAsync(listingController.showListing));
-
-
-//create route
-router.post("/", validateListing, wrapAsync(listingController.createListing));
+router.route("/:id")
+    .get(wrapAsync(listingController.showListing))
+    .put(isOwner, isLoggedIn, validateListing, wrapAsync(listingController.updateListing))
+    .delete(isOwner, isLoggedIn, wrapAsync(listingController.destroyListing));
 
 //edit route
 router.get("/:id/edit", isOwner, isLoggedIn, wrapAsync(listingController.renderEditForm));
 
-//update
-router.put("/:id", isOwner, isLoggedIn, validateListing, wrapAsync(listingController.updateListing));
-
-//delete route
-router.delete("/:id", isOwner, isLoggedIn, wrapAsync(listingController.destroyListing));
 
 
 module.exports = router;
