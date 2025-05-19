@@ -1,6 +1,96 @@
 <% layout("/layouts/boilerplate") -%>
+    <style>
+        .filter {
+            margin-right: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            opacity: 0.7;
+        }
 
-  
+        #filters {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .filter p {
+            font-size: 0.8rem;
+        }
+
+        #tax-info {
+            display: none;
+        }
+
+        .tax-toggle {
+            border: 1px solid black;
+            border-radius: 1rem;
+            height: 3.5rem;
+            padding: 1rem;
+            margin-left: 5rem;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+
+    <div id="filters">
+        <div class="filter">
+            <div> <i class="fa-solid fa-fire"></i></div>
+            <p>Trending</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-bed"></i></div>
+            <p>Rooms</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-mountain-city"></i></div>
+            <p>Iconic cities</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-mountain-sun"></i></div>
+            <p>Mountains</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-brands fa-fort-awesome"></i></div>
+            <p>Castles</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-person-swimming"></i></div>
+            <p>Amazing pools</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-campground"></i></div>
+            <p>Camping</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-tractor"></i></div>
+            <p>Farms</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-igloo"></i></div>
+            <p>Arctic</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-ship"></i></div>
+            <p>ship</p>
+        </div>
+        <div class="filter">
+            <div> <i class="fa-solid fa-plane"></i></div>
+            <p>Plane</p>
+        </div>
+
+        <div class="tax-toggle">
+            <div class="form-check-reverse form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Display total after Taxes</label>
+            </div>
+        </div>
+    </div>
 
 
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
@@ -11,13 +101,40 @@
                     <img src="<%=listing.image.url%>" class="card-img-top" alt="listing image" style="height: 20rem;" />
                     <div class="card-img-overlay"></div>
                     <div class=" card-body">
-                        <p class="card-text"><b>
-                                <%=listing.title%>
+                        <p class="card-text">
+                            <b>
+                                <%= listing.title %>
                             </b><br />
-                            &#8377; <%= listing.price.toLocaleString("en-IN")%>
+                             <span  class="listing-price"  data-price="<%= listing.price %>">
+                               &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                            </span> 
+                            <i class="tax-info" style="display:none;"></i>
                         </p>
                     </div>
                 </div>
             </a>
             <%}%>
     </div>
+
+    <script>
+        let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+        taxSwitch.addEventListener("click", () => {
+            let priceSpans = document.getElementsByClassName("listing-price");
+            let taxInfos = document.getElementsByClassName("tax-info");
+            let listingPrice = document.getElementsByClassName("listing-price");
+            for (let i = 0; i < priceSpans.length; i++) {
+                let price = parseFloat(priceSpans[i].getAttribute("data-price"));
+                if (taxSwitch.checked) {
+                    // Calculate price with GST
+                    let priceWithGST = (price * 1.18).toLocaleString("en-IN", { minimumFractionDigits: 2 });
+                    taxInfos[i].style.display = "inline";
+                    taxInfos[i].textContent = `  ₹${priceWithGST}/night (incl. 18% GST)`;
+                    listingPrice[i].style.display="none";
+                } else {
+                    taxInfos[i].style.display = "none";
+                    taxInfos[i].textContent = "";
+                    listingPrice[i].style.display="inline";
+                }
+            }
+        });
+    </script>
