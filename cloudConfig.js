@@ -11,7 +11,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'Rentsy',
-        allowed_formats: ['jpeg', 'png', 'jpg']
+        allowed_formats: ['jpeg', 'png', 'jpg','avif']
     }
 });
 
