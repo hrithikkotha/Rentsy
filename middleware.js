@@ -30,6 +30,7 @@ module.exports.isOwner=async (req,res,next)=>{
 };
 
 module.exports.validateListing = (req, res, next) => {
+     
     let { error } = listingSchema.validate(req.body);
     // console.log(error);
     if (error) {

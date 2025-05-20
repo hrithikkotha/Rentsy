@@ -1,6 +1,6 @@
-// if(process.env.Node_ENV!="production"){
-//     require("dotenv").config();
-// }
+if(process.env.NODE_ENV !="production"){
+    require("dotenv").config();
+}
 
 
 const express = require("express");
@@ -114,8 +114,13 @@ app.all(/.*/, (req, res, next) => {
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "something went wrong" } = err;
     res.status(statusCode).render("error.ejs", { message });
-    // res.status(statusCode).send(message);
+    res.status(statusCode).send(message);
 });
+// app.use((err, req, res, next) => {
+//     console.error("Error caught by error handler:", err); // Add this line
+//     let { statusCode = 500, message = "something went wrong" } = err;
+//     res.status(statusCode).render("error.ejs", { message });
+// });
 
 app.listen(port, () => {
     console.log("working");
