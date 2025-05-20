@@ -5,13 +5,14 @@ const Listing = require("../models/listing.js");
 const methodOverride = require("method-override");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 const multer=require('multer');
-
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage });
 
 const listingController = require("../controllers/listings.js");
 
 router.route("/")
     .get(wrapAsync(listingController.index))
-    .post(validateListing ,wrapAsync(listingController.createListing));
+    .post(isLoggedIn, upload.single("listing[image]"),validateListing ,wrapAsync(listingController.createListing));
         
         
 
@@ -20,7 +21,7 @@ router.get("/new", isLoggedIn, listingController.renderNewForm);
 
 router.route("/:id")
     .get(wrapAsync(listingController.showListing))
-    .put(isLoggedIn,isOwner,  validateListing, wrapAsync(listingController.updateListing))
+    .put(isLoggedIn,isOwner,upload.single("listing[image]"),  validateListing, wrapAsync(listingController.updateListing))
     .delete(isLoggedIn, isOwner, wrapAsync(listingController.destroyListing));
 
 //edit route
