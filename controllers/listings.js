@@ -1,7 +1,26 @@
 const Listing = require("../models/listing");
 
+
+
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
+    let allListings;
+
+
+
+
+    const { q } = req.query;
+
+    if (q && q.trim() !== "") {
+        // Case-insensitive search on title or location
+        allListings = await Listing.find({
+            $or: [
+                { title: { $regex: q, $options: "i" } },
+                { location: { $regex: q, $options: "i" } }
+            ]
+        });
+    } else {
+        allListings = await Listing.find({});
+    }
     res.render("./listings/index.ejs", { allListings });
 };
 
@@ -51,9 +70,9 @@ module.exports.renderEditForm = async (req, res) => {
         return res.redirect("/listings");
     }
 
-    let originalImageUrl=listing.image.url;
-    originalImageUrl=originalImageUrl.replace("/upload","/upload/w_250")
-    res.render("listings/edit.ejs", { listing,originalImageUrl});
+    let originalImageUrl = listing.image.url;
+    originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250")
+    res.render("listings/edit.ejs", { listing, originalImageUrl });
 
 };
 
