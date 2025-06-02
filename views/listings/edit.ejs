@@ -6,7 +6,8 @@
         <div class="col-7 offset-2">
             <h1>Edit Your Listing</h1>
 
-            <form method="POST" action="/listings/<%=listing._id%>?_method=PUT"  class="needs-validation" novalidate enctype="multipart/form-data">
+            <form method="POST" action="/listings/<%=listing._id%>?_method=PUT" class="needs-validation" novalidate
+                enctype="multipart/form-data">
 
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
@@ -24,13 +25,34 @@
                 </div>
 
                 <div class="mb-3">
-                    Original Image <br/>
-                    <img src="<%=originalImageUrl%>" alt=""/>
+                    <label for="category" class="form-label">Category</label>
+                    <select name="listing[category]" class="form-control" required>
+                        <option value="">Select category</option>
+                        <option value="trending" <%=listing.category==="trending" ? "selected" : "" %>>Trending</option>
+                        <option value="rooms" <%=listing.category==="rooms" ? "selected" : "" %>>Rooms</option>
+                        <option value="iconic" <%=listing.category==="iconic" ? "selected" : "" %>>Iconic cities
+                        </option>
+                        <option value="mountains" <%=listing.category==="mountains" ? "selected" : "" %>>Mountains
+                        </option>
+                        <option value="castles" <%=listing.category==="castles" ? "selected" : "" %>>Castles</option>
+                        <option value="pools" <%=listing.category==="pools" ? "selected" : "" %>>Amazing pools</option>
+                        <option value="camping" <%=listing.category==="camping" ? "selected" : "" %>>Camping</option>
+                        <option value="farms" <%=listing.category==="farms" ? "selected" : "" %>>Farms</option>
+                        <option value="arctic" <%=listing.category==="arctic" ? "selected" : "" %>>Arctic</option>
+                        <option value="ship" <%=listing.category==="ship" ? "selected" : "" %>>Ship</option>
+                        <option value="plane" <%=listing.category==="plane" ? "selected" : "" %>>Plane</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a category</div>
+                </div>
+
+                <div class="mb-3">
+                    Original Image <br />
+                    <img src="<%=originalImageUrl%>" alt="" />
                 </div>
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Upload New Image</label>
-                    <input name="listing[image]"  type="file" class="form-control"  />
+                    <input name="listing[image]" type="file" class="form-control" />
                     <div class="valid-feedback">looks good</div>
                     <div class="invalid-feedback">Enter valid image</div>
                 </div>
@@ -69,5 +91,3 @@
 
         </div>
     </div>
-
- 

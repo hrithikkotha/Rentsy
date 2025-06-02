@@ -22,9 +22,26 @@
                     <div class="invalid-feedback">Enter short descryption</div>
                 </div>
 
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select name="listing[category]" class="form-control" required>
+                        <option value="">Select category</option>
+                        <option value="trending">Trending</option>
+                        <option value="rooms">Rooms</option>
+                        <option value="iconic">Iconic cities</option>
+                        <option value="mountains">Mountains</option>
+                        <option value="castles">Castles</option>
+                        <option value="pools">Amazing pools</option>
+                        <option value="camping">Camping</option>
+                        <option value="farms">Farms</option>
+                        <option value="arctic">Arctic</option>
+                        <option value="ship">Ship</option>
+                        <option value="plane">Plane</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a category</div>
+                </div>
 
 
-               
 
                 <div class="mb-3">
                     <label for="image" class="form-label">upload image</label>
@@ -34,8 +51,8 @@
                 <div class="row">
                     <div class="mb-3 col-md-4">
                         <label for="price" class="form-label">Price</label>
-                        <input name="listing[price]" placeholder="Enter  price"  class="form-control"
-                           type="number" required />
+                        <input name="listing[price]" placeholder="Enter  price" class="form-control" type="number"
+                            required />
                         <div class="valid-feedback">looks good</div>
                         <div class="invalid-feedback">Enter a number</div>
                     </div>
