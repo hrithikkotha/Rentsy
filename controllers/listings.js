@@ -1,28 +1,26 @@
 const Listing = require("../models/listing");
 
 
-
 module.exports.index = async (req, res) => {
     let allListings;
+    const { q, category } = req.query;
 
-
-
-
-    const { q } = req.query;
-
+    let filter = {};
     if (q && q.trim() !== "") {
-        // Case-insensitive search on title or location
-        allListings = await Listing.find({
-            $or: [
-                { title: { $regex: q, $options: "i" } },
-                { location: { $regex: q, $options: "i" } }
-            ]
-        });
-    } else {
-        allListings = await Listing.find({});
+        filter.$or = [
+            { title: { $regex: q, $options: "i" } },
+            { location: { $regex: q, $options: "i" } }
+        ];
     }
+    if (category && category !== "all") {
+        filter.category = category;
+    }
+
+    allListings = await Listing.find(filter);
     res.render("./listings/index.ejs", { allListings });
 };
+
+
 
 module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
@@ -48,16 +46,18 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res, next) => {
-
-    let url = req.file.path;
-    let filename = req.file.filename;
-
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
-    newListing.image = { url, filename };
+
+    if (req.file) {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        newListing.image = { url, filename };
+    }
+
+
     await newListing.save();
     req.flash("success", "New Listing Created");
-
     res.redirect("/listings");
 };
 

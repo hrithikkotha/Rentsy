@@ -22,7 +22,7 @@ const reviewsRouter = require("./routes/review.js");
 const userRouter=require("./routes/user.js");
 
 const port = 8080;
-//const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
 const dbUrl=process.env.ATLASDB_URL;
 main()
     .then(() => {
@@ -48,6 +48,7 @@ const store=mongoStore.create({
     mongoUrl:dbUrl,
     crypto:{
         secret:process.env.SECRET,
+        
     },
     touchAfter:24*3600,
 });
@@ -59,6 +60,7 @@ store.on("error",()=>{
 const sessionOptions = {
     store,
     secret: process.env.SECRET,
+  
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -89,15 +91,7 @@ app.use((req,res,next)=>{
     next();
 });
 
-// app.get("/demouser",async(req,res)=>{
-//     let fakeUser=new User({
-//         email:"hrithikkotha@gmail.com",
-//         username:"kotha",
-//     });
 
-//    let registeredUser=await User.register(fakeUser,"123");
-//    res.send(registeredUser);
-// });
 
 
 app.use("/listings", listingsRouter);
