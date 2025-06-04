@@ -11,7 +11,7 @@ module.exports.listingSchema = Joi.object({
             "trending", "rooms", "iconic", "mountains", "beach", "lake", "pools", "camping",
             "arctic", "boats", "tinyhomes", "luxury", "treehouses", "desert"
         ),
-        image: Joi.string().allow("", null).required(),
+        image: Joi.string().allow("", null),
     }).required(),
 });
 
